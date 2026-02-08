@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: bank_churn_raw
+    database: BANK_CHURN_DWH
+    schema: RAW
+    description: "Raw banking customer churn data ingested via Airbyte from S3"
+
+    tables:
+      - name: CUSTOMERS
+        description: "Raw customer demographic data"
+
+      - name: ACCOUNTS
+        description: "Raw customer account and balance data"
+
+      - name: CHURN
+        description: "Raw customer churn labels and outcomes"
+
+      - name: COMPLAINTS
+        description: "Raw customer complaints and service issues"
+
+      - name: PRODUCTS
+        description: "Raw customer product holdings"

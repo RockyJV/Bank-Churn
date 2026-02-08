@@ -1,0 +1,109 @@
+version: 2
+
+models:
+
+  - name: stg_customers
+    description: Cleaned and standardized customer master data
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: gender
+        tests:
+          - accepted_values:
+              values: ['MALE', 'FEMALE']
+
+      - name: age
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 18
+              max_value: 120
+
+      - name: estimated_salary
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: stg_accounts
+    description: Account-level financial attributes per customer
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: credit_score
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 300
+              max_value: 900
+
+      - name: tenure_years
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+
+      - name: balance
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: is_active_member
+        tests:
+          - accepted_values:
+              values: [0,1]
+
+  - name: stg_products
+    description: Product holdings and card information per customer
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: num_of_products
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 20
+
+      - name: has_credit_card
+        tests:
+          - accepted_values:
+              values: [True,False]
+
+  - name: stg_churn_events
+    description: Customer churn indicator and churn event attributes
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: is_churned
+        tests:
+          - accepted_values:
+              values: [True, False]
+
+  - name: stg_complaints
+    description: Customer complaints and satisfaction signals
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: complain
+        tests:
+          - accepted_values:
+              values: [True, False]
+
+      - name: satisfaction_score
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
