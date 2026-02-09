@@ -1,15 +1,12 @@
-Welcome to your new dbt project!
+Welcome!
 
-### Using the starter project
+Built data platform for Bank Customer churn analysis.
 
-Try running the following commands:
-- dbt run
-- dbt test
+Stack: AWS,Airbyte,Snowflake,dbt,Looker
+Medallion architecture
+Kimball data modeling
+data sources:Customer,account,product,complaint,churn 
 
+Working on next phase - Gen AI use cases.
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [dbt community](https://getdbt.com/community) to learn from other analytics engineers
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+Doc update in progress..
