@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: c_customer_profile
+    description: Customer profile dimension at customer grain
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+
+      - name: gender
+        tests:
+          - accepted_values:
+              values: ['MALE', 'FEMALE']
+
+      - name: age
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 18
+              max_value: 120
+
+      - name: estimated_salary
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: c_customer_behavior
+    description: Customer behavioral/account/product/complaint dimension at customer grain
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+
+      - name: credit_score
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 300
+              max_value: 900
+
+      - name: tenure_years
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 120
+
+      - name: balance
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: is_active_member
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+      - name: has_credit_card
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+      - name: complain
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+      - name: satisfaction_score
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+
+  - name: f_customer_snapshot
+    description: Churn snapshot fact at customer-snapshot grain
+    columns:
+      - name: customer_id
+        tests: [not_null]
+
+      - name: snapshot_date
+        tests: [not_null]
+
+      - name: is_churned
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [customer_id, snapshot_date]
